@@ -10,6 +10,8 @@ function SearchRecipe() {
   const appId = import.meta.env.VITE_API_ID;
   const appKey = import.meta.env.VITE_APP_KEY;
 
+  //fetch function
+
   useEffect(() => {
     if (query) {
       const edamamAPIUrl = `https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&from=0&to=6`;
