@@ -19,7 +19,6 @@ function App() {
 
   console.log("user", user);
 
-
   useEffect(() => {
     if (loading) {
       setTimeout(() => {
@@ -30,11 +29,9 @@ function App() {
 
   return (
     <>
-     <Navbar user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} />
       <Routes>
-        <Route
-          path="/"
-          element=<Homepage/>} />
+        <Route path="/" element={<Homepage />} />
         <Route
           path="/all-recipies"
           element={user ? <Allrecipes user={user} /> : <Navigate to="/login" />}
