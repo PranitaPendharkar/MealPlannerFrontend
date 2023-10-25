@@ -1,21 +1,32 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Allrecipes from "./Allrecipes";
-
-import Navbar from "./Navbar";
+import React, { useState, useEffect } from "react";
 import Hero from "./Hero";
 import SearchRecipe from "./SearchRecipe";
+import Spinner from "./Spinner";
 
 function Homepage() {
+  const [isloading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isloading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
   return (
-    <div>
-      {/* <Navbar /> */}
-      <Hero />
-      <SearchRecipe />
-      {/* <Routes>
-        <Route path="/AllRecipies" element={<Allrecipes />} />
-      </Routes> */}
-    </div>
+    <>
+      {" "}
+      {isloading ? (
+        <div id="cover-spin">
+          <Spinner />
+        </div>
+      ) : (
+        <div>
+          <Hero />
+          <SearchRecipe />
+        </div>
+      )}
+    </>
   );
 }
 

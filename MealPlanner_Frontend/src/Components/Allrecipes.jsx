@@ -14,7 +14,7 @@ const Allrecipes = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const recipesPerPage = 10; // Number of recipes per page
   const appId = import.meta.env.VITE_API_ID;
-    const appKey = import.meta.env.VITE_APP_KEY;
+  const appKey = import.meta.env.VITE_APP_KEY;
 
   const handleDateChange = (newDate) => {
     setDate(newDate);
@@ -44,10 +44,6 @@ const Allrecipes = () => {
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
-
-
-
-    
   };
 
   useEffect(() => {
@@ -93,14 +89,14 @@ const Allrecipes = () => {
         ))}
       </ul>
       <button
-  onClick={() => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  }}
->
-  Previous
-</button>
+        onClick={() => {
+          if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+          }
+        }}
+      >
+        Previous
+      </button>
 
       <button
         onClick={() => {
