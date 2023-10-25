@@ -1,0 +1,48 @@
+label,
+input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form button {
+  background-color: #8bab6a;
+  border: 0;
+  color: #f4ebce;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div.error {
+  padding: 10px;
+  border: 1px solid red;
+  color: red;
+  margin: 20px 0;
+  background-color: #f3d6d6;
+}
+
+form.signup,
+form.login {
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: #dde2e6;
+  border-radius: 4px;
+  padding: 25px;
+}
+
+.go-back {
+  background-color: #fad68a;
+  border: 0;
+  color: #4c4c4c;
+  padding: 8px 50px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: auto 45%;
+}
