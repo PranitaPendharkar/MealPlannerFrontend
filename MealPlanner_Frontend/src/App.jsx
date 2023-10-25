@@ -7,13 +7,7 @@ import Allrecipes from "./Components/Allrecipes";
 
 function App() {
   const [loading, setLoading] = useState(true);
- 
-<div>
-{/* 
-  <Allrecipes/>
-  <MealPlanner/> */}
-  
-  </div>
+
   useEffect(() => {
     if (loading) {
       setTimeout(() => {
@@ -24,7 +18,7 @@ function App() {
 
   return (
     <>
-    
+    {/* <Allrecipes/> */}
 
      {loading ? (
           <div id="cover-spin">

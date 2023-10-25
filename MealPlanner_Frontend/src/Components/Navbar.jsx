@@ -13,7 +13,7 @@ function Navbar() {
     </div>
     <div className="nav-btn">
       <label className="nav-check">
-        <span></span>
+        <span>ddfdgdfg</span>
         <span></span>
         <span></span>
       </label>
