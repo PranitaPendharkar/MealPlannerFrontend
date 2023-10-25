@@ -1,35 +1,42 @@
-import React from 'react'
-import '../Styles/Navbar.css'
-import { Link} from "react-router-dom";
+import React from "react";
+import "../Styles/Navbar.css";
+import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ user, setUser }) {
+  // log out btn
+  const handleClick = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   return (
     <div className="nav">
-   
-    <div className="nav-header">
-      <div className="nav-title">
-        MealPlanner
+      <div className="nav-header">
+        <div className="nav-title">
+          <Link to="/">MealPlanner</Link>
+        </div>
       </div>
+
+      <nav className="nav-links">
+        <Link to="/all-recipies">Recipe</Link>
+        <Link to="/meal-planner">Meal-Plan</Link>
+        <Link to="/favourite">Favourite</Link>
+
+        {user !== null && (
+          <>
+            <span>{user.email}</span>
+            <button onClick={handleClick}>Log out</button>
+          </>
+        )}
+        {user == null && (
+          <>
+            <Link to="login">Login</Link>
+            <Link to="signup">Signup</Link>
+          </>
+        )}
+      </nav>
     </div>
-    <div className="nav-btn">
-      <label className="nav-check">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-    </div>
-    
-    <div className="nav-links">
-    <Link to="/AllRecepies">
-    <a href="" >Recipes</a>
-            </Link>
-      <a href="" >Meal-Plan</a>
-      <a href="">Favourite</a>
-      <a href="" >Sign In/Sign up</a>
-     
-    </div>
-  </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
