@@ -8,8 +8,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./Components/SignUp";
 import Navbar from "./Components/Navbar";
 import Favorite from "./Components/Favorite";
+import Footer from "./Components/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
+
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -36,6 +38,17 @@ function App() {
           element={!token ? <Signup /> : <Navigate to="/" />}
         />
       </Routes>
+
+<Footer/>
+      {/* {loading ? (
+        <div id="cover-spin">
+          <Spinner />
+        </div>
+      ) : (
+        <Homepage />
+      )} */}
+
+
     </>
   );
 }
