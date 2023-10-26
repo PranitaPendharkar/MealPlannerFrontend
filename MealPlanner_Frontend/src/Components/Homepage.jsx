@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Hero from "./Hero";
 import SearchRecipe from "./SearchRecipe";
 import Spinner from "./Spinner";
+import BannerImg from "./BannerImg";
 
 function Homepage() {
   const [isloading, setIsLoading] = useState(false);
@@ -24,6 +25,7 @@ function Homepage() {
         <div>
           <Hero />
           <SearchRecipe />
+          <BannerImg />
         </div>
       )}
     </>
