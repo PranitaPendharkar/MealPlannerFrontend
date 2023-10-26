@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./Components/SignUp";
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -45,7 +46,7 @@ function App() {
           element={!user ? <Signup setUser={setUser} /> : <Navigate to="/" />}
         />
       </Routes>
-
+<Footer/>
       {/* {loading ? (
         <div id="cover-spin">
           <Spinner />
