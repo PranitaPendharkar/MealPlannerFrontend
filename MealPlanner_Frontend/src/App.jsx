@@ -7,45 +7,39 @@ import Login from "./Components/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./Components/SignUp";
 import Navbar from "./Components/Navbar";
+import Favorite from "./Components/Favorite";
+import Footer from "./Components/Footer";
+import { useContext } from "react";
+import { AuthContext } from "./context/authContext";
+
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-
-  // check if user exists
-  useEffect(() => {
-    if (!user) setUser(JSON.parse(localStorage.getItem("user")));
-  }, [user]);
-
-  console.log("user", user);
-
-  useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    }
-  }, []);
+  const { token } = useContext(AuthContext);
 
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
           path="/all-recipies"
-          element={user ? <Allrecipes user={user} /> : <Navigate to="/login" />}
+          element={token ? <Allrecipes /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/favorite"
+          element={token ? <Favorite /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
-          element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />}
+          element={!token ? <Login /> : <Navigate to="/" />}
         />
         <Route
           path="/signup"
-          element={!user ? <Signup setUser={setUser} /> : <Navigate to="/" />}
+          element={!token ? <Signup /> : <Navigate to="/" />}
         />
       </Routes>
 
+<Footer/>
       {/* {loading ? (
         <div id="cover-spin">
           <Spinner />
@@ -53,6 +47,8 @@ function App() {
       ) : (
         <Homepage />
       )} */}
+
+
     </>
   );
 }
