@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../Styles/Navbar.css";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
+import { useJwt } from "react-jwt";
 
-function Navbar({ user, setUser }) {
+function Navbar() {
+  const { logout, token } = useContext(AuthContext);
+
   // log out btn
   const handleClick = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+    localStorage.removeItem("token");
+    logout();
   };
+
+  const { decodedToken } = useJwt(token);
 
   return (
     <div className="nav">
@@ -22,13 +28,13 @@ function Navbar({ user, setUser }) {
         <Link to="/meal-planner">Meal-Plan</Link>
         <Link to="/favourite">Favourite</Link>
 
-        {user !== null && (
+        {token !== null && (
           <>
-            <span>{user.email}</span>
+            <span style={{ padding: "10px" }}>Hello, {decodedToken?.name}</span>
             <button onClick={handleClick}>Log out</button>
           </>
         )}
-        {user == null && (
+        {token === null && (
           <>
             <Link to="login">Login</Link>
             <Link to="signup">Signup</Link>
