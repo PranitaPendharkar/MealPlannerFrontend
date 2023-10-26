@@ -7,10 +7,8 @@ import Login from "./Components/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./Components/SignUp";
 import Navbar from "./Components/Navbar";
-
+import Favorite from "./Components/Favorite";
 import Footer from "./Components/Footer";
-
-import Favorite from "./Components/Favourite";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 
@@ -28,7 +26,7 @@ function App() {
           element={token ? <Allrecipes /> : <Navigate to="/login" />}
         />
         <Route
-          path="/favourite"
+          path="/favorite"
           element={token ? <Favorite /> : <Navigate to="/login" />}
         />
         <Route
