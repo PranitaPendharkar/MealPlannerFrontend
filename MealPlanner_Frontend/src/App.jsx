@@ -12,7 +12,6 @@ import Footer from "./Components/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
 
-
 function App() {
   const { token } = useContext(AuthContext);
 
@@ -22,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
-          path="/all-recipies"
+          path="/all-recipes"
           element={token ? <Allrecipes /> : <Navigate to="/login" />}
         />
         <Route
@@ -39,16 +38,7 @@ function App() {
         />
       </Routes>
 
-<Footer/>
-      {/* {loading ? (
-        <div id="cover-spin">
-          <Spinner />
-        </div>
-      ) : (
-        <Homepage />
-      )} */}
-
-
+      <Footer />
     </>
   );
 }

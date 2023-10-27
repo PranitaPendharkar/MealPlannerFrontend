@@ -24,14 +24,16 @@ function Navbar() {
       </div>
 
       <nav className="nav-links">
-        <Link to="/all-recipies">Recipe</Link>
+        <Link to="/all-recipes">Recipe</Link>
         <Link to="/meal-planner">Meal-Plan</Link>
         <Link to="/favorite">Favorite</Link>
 
         {token !== null && (
           <>
             <span style={{ padding: "10px" }}>Hello, {decodedToken?.name}</span>
-            <button onClick={handleClick}>Log out</button>
+            <button className="log-out-btn" onClick={handleClick}>
+              Log out
+            </button>
           </>
         )}
         {token === null && (

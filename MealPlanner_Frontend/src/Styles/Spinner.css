@@ -3,9 +3,7 @@
   height: 10rem;
   width: 10rem;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
+  margin: 15% auto;
 }
 
 @keyframes rotate {
