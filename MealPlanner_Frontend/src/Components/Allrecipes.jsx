@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Modal from "react-modal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import { Card } from "antd";
+const { Meta } = Card;
+import "../Styles/AllRecipes.css";
+import SearchRecipe from "./SearchRecipe";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
 const Allrecipes = ({ onRecipeSelect, setSelectedDate, setSelectedRecipe }) => {
@@ -10,6 +13,10 @@ const Allrecipes = ({ onRecipeSelect, setSelectedDate, setSelectedRecipe }) => {
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const recipesPerPage = 12; // Number of recipes per page
 
   const appId = import.meta.env.VITE_API_ID;
   const appKey = import.meta.env.VITE_APP_KEY;
@@ -46,16 +53,26 @@ const Allrecipes = ({ onRecipeSelect, setSelectedDate, setSelectedRecipe }) => {
   }, []);
 
   return (
-    <div>
-      <h2>Recipe List</h2>
+
+    <div className="recipes-container">
+      <h1>Recipe List</h1>
       {recipes.length > 0 && (
-        <ul>
+        <div className="recipes-wrapper">
           {recipes.map((recipe, index) => (
-            <li key={recipe.recipe.url}>
-              <img src={recipe.recipe.image} alt={recipe.label} />
+            <div className="recipe-card" key={recipe.recipe.url}>
+    
+     <Card
+              hoverable
+              style={{
+                width: 240,
+              }}
+              cover={<img alt={recipe.recipe.label} src={recipe.recipe.image} />}
+            >
               <a href={recipe.recipe.url} target="_blank" rel="noopener noreferrer">
-                <h3>{recipe.recipe.label}</h3>
+                {" "}
+                <Meta title={recipe.recipe.label} description={recipe.recipe.mealType} />{" "}
               </a>
+            </Card>
 
               <button onClick={() => openModal(index)}>Add to planner</button>
               <Modal
@@ -70,10 +87,11 @@ const Allrecipes = ({ onRecipeSelect, setSelectedDate, setSelectedRecipe }) => {
                 </button>
                 <button onClick={closeModal}>Close</button>
               </Modal>
-            </li>
+            </div>
           ))}
-        </ul>
-      )}
+        </div >  
+)}
+   
     </div>
   );
 }

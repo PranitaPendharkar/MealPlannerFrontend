@@ -38,7 +38,11 @@ function SearchRecipe() {
             placeholder="What are you looking for?"
           />
           <button className="searchButton" onClick={handleSearch}>
-          <i className="fa-solid fa-magnifying-glass fa-spin" style={{color: "#f0f2f5"}}></i> {/* Add a search icon here */}
+            <i
+              className="fa-solid fa-magnifying-glass fa-spin"
+              style={{ color: "#8bab6a" }}
+            ></i>{" "}
+            {/* Add a search icon here */}
           </button>
         </div>
       </div>
@@ -55,7 +59,11 @@ function SearchRecipe() {
             </a>
             <p className="card-title">{recipe.recipe.label}</p>
             <button className="card-btn">
-              <a href={recipe.recipe.url} target="_blank" rel="noopener noreferrer">
+              <a
+                href={recipe.recipe.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h4>View Recipe</h4>
               </a>
             </button>
