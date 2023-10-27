@@ -14,7 +14,7 @@ input {
 form button {
   background-color: #8bab6a;
   border: 0;
-  color: #f4ebce;
+  color: #ffffff;
   padding: 8px 15px;
   border-radius: 4px;
   cursor: pointer;
@@ -31,18 +31,8 @@ div.error {
 form.signup,
 form.login {
   max-width: 400px;
-  margin: 40px auto;
+  margin: 100px auto;
   background-color: #dde2e6;
   border-radius: 4px;
-  padding: 25px;
-}
-
-.go-back {
-  background-color: #fad68a;
-  border: 0;
-  color: #4c4c4c;
-  padding: 8px 50px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: auto 45%;
+  padding: 50px 25px;
 }

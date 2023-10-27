@@ -31,9 +31,9 @@ body {
 
 .nav > .nav-links {
   display: inline;
-
   float: right;
   font-size: 18px;
+  margin-right: 2%;
 }
 
 .nav > .nav-links > a {
@@ -45,6 +45,15 @@ body {
 
 .nav > .nav-links > a:hover {
   background-color: #8bab6a;
+}
+
+.log-out-btn {
+  background-color: #8bab6a;
+  border: 0;
+  color: #f4ebce;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {

@@ -3,7 +3,10 @@ import axios from "axios";
 import Modal from "react-modal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import { Card } from "antd";
+const { Meta } = Card;
+import "../Styles/AllRecipes.css";
+import SearchRecipe from "./SearchRecipe";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
 const Allrecipes = () => {
@@ -12,7 +15,7 @@ const Allrecipes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const recipesPerPage = 10; // Number of recipes per page
+  const recipesPerPage = 12; // Number of recipes per page
   const appId = import.meta.env.VITE_API_ID;
   const appKey = import.meta.env.VITE_APP_KEY;
 
@@ -55,16 +58,27 @@ const Allrecipes = () => {
   };
 
   return (
-    <div>
-      <h2>Recipes</h2>
-      <ul>
+    <div className="recipes-container">
+      <h1>Recipes</h1>
+      <SearchRecipe />
+      <div className="recipes-wrapper">
         {recipes.map((recipe, index) => (
-          <li key={index}>
-            <img src={recipe.image} alt={recipe.label} />
-            <a href={recipe.url} target="_blank" rel="noopener noreferrer">
-              <h3>{recipe.label}</h3>
-            </a>
-            <button onClick={openModal}>Add to planner</button>
+          <div className="recipe-card" key={index}>
+            <Card
+              hoverable
+              style={{
+                width: 240,
+              }}
+              cover={<img alt={recipe.label} src={recipe.image} />}
+            >
+              <a href={recipe.url} target="_blank" rel="noopener noreferrer">
+                {" "}
+                <Meta title={recipe.label} description={recipe.mealType} />{" "}
+              </a>
+            </Card>
+            <button className="btn-add-planner" onClick={openModal}>
+              Add to planner
+            </button>
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
@@ -85,26 +99,30 @@ const Allrecipes = () => {
               <button>All Recipes</button>
               <button onClick={closeModal}>Close</button>
             </Modal>
-          </li>
+          </div>
         ))}
-      </ul>
-      <button
-        onClick={() => {
-          if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-          }
-        }}
-      >
-        Previous
-      </button>
+      </div>
+      <div className="pagination">
+        <button
+          className="btn-pagination"
+          onClick={() => {
+            if (currentPage > 1) {
+              setCurrentPage(currentPage - 1);
+            }
+          }}
+        >
+          Previous
+        </button>
 
-      <button
-        onClick={() => {
-          setCurrentPage(currentPage + 1);
-        }}
-      >
-        Next
-      </button>
+        <button
+          className="btn-pagination"
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+          }}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

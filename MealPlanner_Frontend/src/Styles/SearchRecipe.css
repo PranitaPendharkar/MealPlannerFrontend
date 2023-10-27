@@ -1,39 +1,34 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css");
 div.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
-    float: left;
-    width: 180px;
-  }
-  
-  div.gallery:hover {
-    border: 1px solid #777;
-  }
-  
-  div.gallery img {
-    width: 100%;
-    height: auto;
-  }
-  
-  div.desc {
-    padding: 15px;
-    text-align: center;
-  }
-  .card-btn{
-    background-color: #8BAB6A;
-   margin-left: auto;
-  }
-  .card-btn:hover {
-    background-color: #f19A33;
-    color: white;
-  }
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
 
+div.gallery:hover {
+  border: 1px solid #777;
+}
 
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
 
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+.card-btn {
+  background-color: #8bab6a;
+  margin-left: auto;
+}
+.card-btn:hover {
+  background-color: #f19a33;
+  color: white;
+}
 
-
-  /* search bar*/
-  
+/* search bar*/
 
 /* body{
   background: #f2f2f2;
@@ -48,24 +43,24 @@ div.gallery {
 
 .searchTerm {
   width: 100%;
-  border: 3px solid #00B4CC;
-
+  border: 3px solid #f0f2f5;
   padding: 5px;
   height: 36px;
   border-radius: 5px 0 0 5px;
   outline: none;
-  color: #9DBFAF;
+  color: #9dbfaf;
+  margin: 0;
 }
 
-.searchTerm:focus{
-  color: #00B4CC;
+.searchTerm:focus {
+  color: #f0f2f5;
 }
 
 .searchButton {
   width: 40px;
   height: 36px;
-  border: 1px solid #00B4CC;
-  background: #00B4CC;
+  border: none;
+  background: #f0f2f5;
   text-align: center;
   color: #fff;
   border-radius: 0 5px 5px 0;
@@ -74,7 +69,7 @@ div.gallery {
 }
 
 /*Resize the wrap to see the search bar change!*/
-.wrap{
+.wrap {
   width: 30%;
   position: absolute;
   top: 50%;
