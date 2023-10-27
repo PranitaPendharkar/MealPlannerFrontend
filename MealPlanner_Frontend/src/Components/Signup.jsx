@@ -74,7 +74,7 @@ export default function Signup() {
 
             {error && <div className="error">{error}</div>}
           </form>
-          <button className="go-back">Back Homepage</button>
+
           {/* ADD FOOTER */}
         </>
       )}
