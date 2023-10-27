@@ -11,7 +11,7 @@ import Favorite from "./Components/Favorite";
 import Footer from "./Components/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
-
+import MealPlannerComponent from "./Components/MealPlannerComponent";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -36,6 +36,11 @@ function App() {
         <Route
           path="/signup"
           element={!token ? <Signup /> : <Navigate to="/" />}
+        />
+        {/* below route is just for testing if you want to do add to planner to All recipe page change below path to all-recipes and comment 2nd route */} 
+         <Route
+          path="/meal-planner"
+          element={token ? <MealPlannerComponent /> : <Navigate to="/login" />}
         />
       </Routes>
 

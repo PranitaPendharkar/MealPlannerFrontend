@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import Modal from "react-modal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
-const Allrecipes = () => {
+const Allrecipes = ({ onRecipeSelect, setSelectedDate, setSelectedRecipe }) => {
   const [date, setDate] = useState(new Date());
+  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const recipesPerPage = 10; // Number of recipes per page
+
+
   const appId = import.meta.env.VITE_API_ID;
   const appKey = import.meta.env.VITE_APP_KEY;
 
@@ -20,93 +18,65 @@ const Allrecipes = () => {
     setDate(newDate);
   };
 
-  const openModal = () => {
-    setModalIsOpen(true);
+  const openModal = (recipeIndex) => {
+    setSelectedRecipeIndex(recipeIndex);
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setSelectedRecipeIndex(null);
   };
 
-  const fetchRecipes = async () => {
-    try {
-      const appId = import.meta.env.VITE_API_ID;
-      const appKey = import.meta.env.VITE_APP_KEY;
-      const from = (currentPage - 1) * recipesPerPage;
-      const to = from + recipesPerPage;
-      const edamamAPIUrl = `https://api.edamam.com/search?q=pasta&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
-      console.log("API URL:", edamamAPIUrl);
+  const handleAddToPlanner = (recipe, day, date) => {
+    setSelectedRecipe(recipe);
+    setSelectedDate(date);
+    onRecipeSelect(recipe, day, date);
+    setSelectedRecipeIndex(null); // Close the modal
 
-      const response = await axios.get(edamamAPIUrl);
-      const newRecipes = response.data.hits.map((hit) => hit.recipe);
+  };
 
-      setRecipes(newRecipes); // Directly set the new recipes
-    } catch (error) {
-      console.error("Error fetching recipes:", error);
-    }
+  const getDayName = (index) => {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return daysOfWeek[index];
   };
 
   useEffect(() => {
-    fetchRecipes();
-  }, [currentPage]);
-
-  const handleAddToPlanner = (recipe) => {
-    setSelectedRecipe(recipe);
-  };
+    fetch(`https://api.edamam.com/search?q=breakfast&app_id=${appId}&app_key=${appKey}`)
+      .then(response => response.json())
+      .then(data => setRecipes(data.hits));
+  }, []);
 
   return (
     <div>
-      <h2>Recipes</h2>
-      <ul>
-        {recipes.map((recipe, index) => (
-          <li key={index}>
-            <img src={recipe.image} alt={recipe.label} />
-            <a href={recipe.url} target="_blank" rel="noopener noreferrer">
-              <h3>{recipe.label}</h3>
-            </a>
-            <button onClick={openModal}>Add to planner</button>
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-              contentLabel="Example Modal"
-            >
-              <h2>Choose a day to save the meal</h2>
-              <Calendar onChange={handleDateChange} value={date} />
-              <p>Selected Date: {date.toDateString()}</p>
-              <button onClick={() => handleAddToPlanner(recipe)}>
-                Add to weekly planner
-              </button>
-              {selectedRecipe && (
-                <div>
-                  <h3>Selected Recipe: {selectedRecipe.label}</h3>
-                  <p>Selected Date: {date.toDateString()}</p>
-                </div>
-              )}
-              <button>All Recipes</button>
-              <button onClick={closeModal}>Close</button>
-            </Modal>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={() => {
-          if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-          }
-        }}
-      >
-        Previous
-      </button>
+      <h2>Recipe List</h2>
+      {recipes.length > 0 && (
+        <ul>
+          {recipes.map((recipe, index) => (
+            <li key={recipe.recipe.url}>
+              <img src={recipe.recipe.image} alt={recipe.label} />
+              <a href={recipe.recipe.url} target="_blank" rel="noopener noreferrer">
+                <h3>{recipe.recipe.label}</h3>
+              </a>
 
-      <button
-        onClick={() => {
-          setCurrentPage(currentPage + 1);
-        }}
-      >
-        Next
-      </button>
+              <button onClick={() => openModal(index)}>Add to planner</button>
+              <Modal
+                isOpen={selectedRecipeIndex === index}
+                onRequestClose={closeModal}
+                contentLabel="Example Modal"
+              >
+                <h2>Choose a day to save the meal</h2>
+                <Calendar onChange={handleDateChange} value={date} />
+                <button onClick={() => handleAddToPlanner(recipe.recipe, getDayName(date.getDay()), date)}>
+                  Add to weekly planner
+                </button>
+                <button onClick={closeModal}>Close</button>
+              </Modal>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
+}
 
 export default Allrecipes;
+
