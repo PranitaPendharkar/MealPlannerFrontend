@@ -53,7 +53,7 @@ export default function AllRecipes() {
       const appKey = import.meta.env.VITE_APP_KEY;
 
       const to = from + recipesPerPage;
-      const edamamAPIUrl = `https://api.edamam.com/search?q=pasta&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
+      const edamamAPIUrl = `https://api.edamam.com/search?q=lunch&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
       console.log("API URL:", edamamAPIUrl);
 
       const response = await axios.get(edamamAPIUrl);
@@ -126,17 +126,18 @@ export default function AllRecipes() {
 
       console.log("ABOUT TO ENTER FETCH");
 
+      // const localAPI = "http://localhost:8080/meal-planner/create-meal-planners";
+      const deployAPI =
+        "https://meal-planner-backend-57g4.onrender.com/meal-planner/create-meal-planners";
+
       try {
-        const res = await fetch(
-          "http://localhost:8080/meal-planner/create-meal-planners",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedData),
-          }
-        );
+        const res = await fetch(deployAPI, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        });
         console.log("ARE WE HERE?");
         const data = await res.json();
         console.log(data);
@@ -181,11 +182,7 @@ export default function AllRecipes() {
               Add to planner
             </button>
 
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={closeModal}
-              // contentLabel="Example Modal"
-            >
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
               <h2>Choose a day to save the meal</h2>
               <Calendar onChange={handleDateChange} value={date} />
               <p>Selected Date: {date.toDateString()}</p>
@@ -200,12 +197,7 @@ export default function AllRecipes() {
               <button onClick={handleAddToPlanner}>
                 Add to weekly planner
               </button>
-              {/* {selectedRecipe && (
-                <div>
-                  <h3>Selected Recipe: {selectedRecipe.label}</h3>
-                  <p>Selected Date: {date.toDateString()}</p>
-                </div> */}
-              {/* )} */}
+
               <button onClick={closeModal}>Close</button>
             </Modal>
           </div>
