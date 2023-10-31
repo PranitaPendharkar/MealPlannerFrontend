@@ -53,7 +53,7 @@ div.desc {
 }
 
 .searchTerm:focus {
-  color: #f0f2f5;
+  color: black;
 }
 
 .searchButton {
