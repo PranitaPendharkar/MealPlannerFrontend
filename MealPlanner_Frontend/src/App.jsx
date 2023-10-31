@@ -11,6 +11,9 @@ import Favorite from "./Components/Favorite";
 import Footer from "./Components/Footer";
 import { useContext } from "react";
 import { AuthContext } from "./context/authContext";
+import { RecipeProvider } from './context/RecipeContext';
+
+import RecipePage from './Components/RecipePage';
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -18,6 +21,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <RecipeProvider>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route
@@ -35,10 +39,16 @@ function App() {
         <Route
           path="/signup"
           element={!token ? <Signup /> : <Navigate to="/" />}
-        />
+          />
+          
+         <Route path="/results"  element={token ? <RecipePage /> : <Navigate to="/login" />} />
+        
       </Routes>
-
+   
+       
+     
       <Footer />
+      </RecipeProvider>
     </>
   );
 }
