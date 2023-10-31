@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import SearchRecipe from "./SearchRecipe";
 import Spinner from "./Spinner";
 import BannerImg from "./BannerImg";
+import SearchPage from "./SearchPage";
 
 function Homepage() {
   const [isloading, setIsLoading] = useState(false);
@@ -24,8 +25,10 @@ function Homepage() {
       ) : (
         <div>
           <Hero />
-          <SearchRecipe />
+          {/* <SearchRecipe /> */}
+          <SearchPage/>
           <BannerImg />
+       
         </div>
       )}
     </>

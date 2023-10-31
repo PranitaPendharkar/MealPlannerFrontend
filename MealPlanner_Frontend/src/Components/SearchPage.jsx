@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Styles/SearchRecipe.css";
+import { useRecipeContext } from '../context/RecipeContext';
+import { useNavigate  } from 'react-router-dom';
 
-function SearchRecipe() {
-  const [query, setQuery] = useState("");
-  const [recipes, setRecipes] = useState([]);
-  const appId = import.meta.env.VITE_API_ID;
-  const appKey = import.meta.env.VITE_APP_KEY;
+function SearchPage() {
+    const { query, setQuery } = useRecipeContext();
+  
+  
+  const navigateTo = useNavigate();
 
   const handleSearch = () => {
-    if (query) {
-      const edamamAPIUrl = `https://api.edamam.com/search?q=${query}&app_id=${appId}&app_key=${appKey}&from=0&to=6`;
-
-      axios
-        .get(edamamAPIUrl)
-        .then((response) => {
-          setRecipes(response.data.hits);
-        })
-        .catch((error) => {
-          console.error("Error fetching recipes:", error);
-        });
-    } else {
-      // Clear recipes if the query is empty
-      setRecipes([]);
-    }
+    setQuery(query);
+    navigateTo('/results')
   };
 
   return (
@@ -46,7 +35,7 @@ function SearchRecipe() {
           </button>
         </div>
       </div>
-      <ul>
+      {/* <ul>
         {recipes.map((recipe) => (
           <div className="gallery" key={recipe.recipe.label}>
             <a target="_blank" href="img_5terre.jpg">
@@ -69,13 +58,9 @@ function SearchRecipe() {
             </button>
           </div>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
 
-export default SearchRecipe;
-
-// 1. Create component for meal-planner where you fetch and display all data in the created meal plan
-
-// 2. In that component, create a weekly view where to showcase all meals
+export default SearchPage;

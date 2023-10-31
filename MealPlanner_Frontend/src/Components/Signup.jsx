@@ -10,7 +10,7 @@ export default function Signup() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login } = useContext(AuthContext);
+  const { login, setId } = useContext(AuthContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,8 +33,10 @@ export default function Signup() {
     }
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("id", JSON.stringify(data.Id));
       setIsLoading(false);
       login(data.token);
+      setId(data.Id);
     }
   };
 
