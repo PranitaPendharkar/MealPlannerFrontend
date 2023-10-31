@@ -75,3 +75,7 @@ function SearchRecipe() {
 }
 
 export default SearchRecipe;
+
+// 1. Create component for meal-planner where you fetch and display all data in the created meal plan
+
+// 2. In that component, create a weekly view where to showcase all meals
