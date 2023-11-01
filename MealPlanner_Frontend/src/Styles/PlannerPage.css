@@ -1,0 +1,23 @@
+.planner-container {
+  /* border: 2px solid red; */
+  display: flex;
+  width: 70vw;
+  margin: 10%;
+}
+
+.meal-row {
+  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+/* .week-days {
+  border: 2px solid green;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+} */
+.meal {
+  padding: 15%;
+}
