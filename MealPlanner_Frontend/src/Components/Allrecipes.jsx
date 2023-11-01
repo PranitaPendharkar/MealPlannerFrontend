@@ -10,12 +10,17 @@ import SearchRecipe from "./SearchRecipe";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 import { AuthContext } from "../context/authContext";
 import Select from "react-select";
+import Swal from 'sweetalert2';
+//import 'sweetalert2/src/sweetalert2.scss'; // Import the styles if you're not using CSS modules
+
 
 export default function AllRecipes() {
   const [date, setDate] = useState(new Date());
   const [recipes, setRecipes] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null); //npm dropdown - meals
+  const [showAlert, setShowAlert] = useState(false);//recipe added message
+
 
   const { Id } = useContext(AuthContext);
 
@@ -141,6 +146,16 @@ export default function AllRecipes() {
         console.log("ARE WE HERE?");
         const data = await res.json();
         console.log(data);
+         // Show the success alert using SweetAlert2
+    Swal.fire({
+      icon: 'success',
+      title: 'Your meal is successfully added to meal plan!!!',
+      showConfirmButton: false,
+      timer: 4000, // Automatically close the alert after 2 seconds
+    });
+        // Close the modal after successfully adding the recipe
+      closeModal();
+
       } catch (error) {
         console.log("ERROR: ", error);
       }
@@ -212,7 +227,7 @@ export default function AllRecipes() {
             }
           }}
         >
-          Previous
+        &laquo; Previous
         </button>
 
         <button
@@ -221,7 +236,7 @@ export default function AllRecipes() {
             setCurrentPage(currentPage + 1);
           }}
         >
-          Next
+          Next &raquo;
         </button>
       </div>
     </div>
