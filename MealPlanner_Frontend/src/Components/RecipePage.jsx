@@ -70,8 +70,15 @@ const RecipePage = () => {
               </a>
             </Card>
             <button className="btn-add-planner">
-              View Recipe
+              <a
+                href={recipe.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h4>View Recipe</h4>
+              </a>
             </button>
+   
           </div>
           ))}
           </div>
