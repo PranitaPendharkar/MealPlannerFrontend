@@ -10,17 +10,16 @@ import SearchRecipe from "./SearchRecipe";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 import { AuthContext } from "../context/authContext";
 import Select from "react-select";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 //import 'sweetalert2/src/sweetalert2.scss'; // Import the styles if you're not using CSS modules
 
-
 export default function AllRecipes() {
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
   const [recipes, setRecipes] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null); //npm dropdown - meals
-  const [showAlert, setShowAlert] = useState(false);//recipe added message
-
+  const [showAlert, setShowAlert] = useState(false); //recipe added message
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Initialize selectedDate with the current date
 
   const { Id } = useContext(AuthContext);
 
@@ -30,9 +29,9 @@ export default function AllRecipes() {
 
   // Modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
-  };
+  // const handleDateChange = (newDate) => {
+  //   setDate(newDate);
+  // };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -47,6 +46,8 @@ export default function AllRecipes() {
     setCurrentRecipe(() => {
       return { recipe };
     });
+    // Set the selected date to the current date in the beginning
+    setSelectedDate(new Date());
   };
 
   // edamam API - Recipe
@@ -83,7 +84,7 @@ export default function AllRecipes() {
       {
         days: [
           {
-            date: Date.now(),
+            date: selectedDate, // Use the selectedDate state,
             meals: {
               breakfast: {
                 link:
@@ -123,6 +124,7 @@ export default function AllRecipes() {
       };
 
       const updatedData = { ...mealPlannerData };
+      updatedData.weeks[0].days[0].date = selectedDate; // Update the selected date
       updatedData.weeks[0].days[0].meals[selectedOption.value.toLowerCase()] =
         newMeal;
 
@@ -131,12 +133,13 @@ export default function AllRecipes() {
 
       console.log("ABOUT TO ENTER FETCH");
 
-      // const localAPI = "http://localhost:8080/meal-planner/create-meal-planners";
-      const deployAPI =
-        "https://meal-planner-backend-57g4.onrender.com/meal-planner/create-meal-planners";
+      const localAPI =
+        "http://localhost:8080/meal-planner/create-meal-planners";
+      // const deployAPI =
+      //   "https://meal-planner-backend-57g4.onrender.com/meal-planner/create-meal-planners";
 
       try {
-        const res = await fetch(deployAPI, {
+        const res = await fetch(localAPI, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -146,16 +149,15 @@ export default function AllRecipes() {
         console.log("ARE WE HERE?");
         const data = await res.json();
         console.log(data);
-         // Show the success alert using SweetAlert2
-    Swal.fire({
-      icon: 'success',
-      title: 'Your meal is successfully added to meal plan!!!',
-      showConfirmButton: false,
-      timer: 4000, // Automatically close the alert after 2 seconds
-    });
+        // Show the success alert using SweetAlert2
+        Swal.fire({
+          icon: "success",
+          title: "Your meal is successfully added to meal plan!!!",
+          showConfirmButton: false,
+          timer: 4000, // Automatically close the alert after 2 seconds
+        });
         // Close the modal after successfully adding the recipe
-      closeModal();
-
+        closeModal();
       } catch (error) {
         console.log("ERROR: ", error);
       }
@@ -199,8 +201,8 @@ export default function AllRecipes() {
 
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
               <h2>Choose a day to save the meal</h2>
-              <Calendar onChange={handleDateChange} value={date} />
-              <p>Selected Date: {date.toDateString()}</p>
+              <Calendar onChange={setSelectedDate} value={selectedDate} />
+              <p>Selected Date: {selectedDate.toDateString()}</p>
               <h3>Selected recipe: {currentRecipe?.recipe.label}</h3>
 
               <Select
@@ -227,7 +229,7 @@ export default function AllRecipes() {
             }
           }}
         >
-        &laquo; Previous
+          &laquo; Previous
         </button>
 
         <button

@@ -1,6 +1,48 @@
+.planner-wrapper {
+  /* border: 2px solid red; */
+  width: 90%;
+  margin: 5%;
+  height: 600px;
+}
+
+.planner-header {
+  /* border: 2px solid red; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  align-content: space-around;
+  font-size: 1.5em;
+  background-color: #f19a33;
+  color: #ffffff;
+  height: 20vh;
+}
+
+.week-days {
+}
 .planner-container {
-  border: 2px solid red;
+  /* border: 2px solid red; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 500px;
+}
+
+.planner-container h2 {
+  text-align: center;
+}
+
+.planner-card {
+  border: 2px solid black;
+}
+
+.planner-card h4 {
+  padding-top: 15%;
+}
+
+.format-date {
+  /* border: 2px solid red; */
   display: flex;
-  width: 70vw;
-  margin: 10%;
+  padding: 5%;
+  text-align: center;
 }
