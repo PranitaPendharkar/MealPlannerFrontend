@@ -1,31 +1,48 @@
+/* :root Selects the document's root element */
+/* The var() CSS function can be used to insert the value of a custom property (sometimes called a "CSS variable") instead of any part of a value of another property */
+
+/* --a custom property */
+:root {
+  --primary: #f19a33;
+  --secondary: #8BAB6A;
+  --orange: #FAD68A
+  --light-orange:#f4ebce;
+  --light: #eee;
+  --light-grey:#dde2e6;
+  --grey: #888
+  --dark: #313154;
+  --danger: #ff5b57;
+
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
 .planner-wrapper {
-  /* border: 2px solid red; */
-  width: 90%;
-  margin: 5%;
+  background-color: var(--light-grey);
+  width: 80%;
+  margin: 10%;
   height: 600px;
 }
 
 .planner-header {
-  /* border: 2px solid red; */
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   justify-items: center;
   align-content: space-around;
   font-size: 1.5em;
-  background-color: #f19a33;
-  color: #ffffff;
-  height: 20vh;
+  background-color: var(--secondary);
+  color: var(--light);
+  height: 10%;
 }
 
-.week-days {
-}
+
 .planner-container {
-  /* border: 2px solid red; */
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   flex-wrap: wrap;
   justify-content: space-between;
   height: 500px;
+  
 }
 
 .planner-container h2 {
@@ -33,7 +50,8 @@
 }
 
 .planner-card {
-  border: 2px solid black;
+ border: 2px solid var(--light);
+ padding:8%;
 }
 
 .planner-card h4 {
@@ -41,8 +59,11 @@
 }
 
 .format-date {
-  /* border: 2px solid red; */
   display: flex;
   padding: 5%;
   text-align: center;
+}
+
+div .meals h4{
+  color: var(--orange);
 }
