@@ -13,13 +13,16 @@ import { AuthContext } from "./context/authContext";
 import { RecipeProvider } from "./context/RecipeContext";
 import RecipePage from "./Components/RecipePage";
 import PlannerPage from "./Components/PlannerPage";
+import React, { useEffect, useState } from 'react';
+import { IngredientsProvider } from "./context/ingredientsContext";
 
 function App() {
   const { token } = useContext(AuthContext);
-
+  const [favorites, setFavorites] = useState([]);
   return (
     <>
       <Navbar />
+      <IngredientsProvider>
       <RecipeProvider>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -33,7 +36,7 @@ function App() {
           />
           <Route
             path="/favorite"
-            element={token ? <Favorite /> : <Navigate to="/login" />}
+            element={token ? <Favorite favorites={favorites}/> : <Navigate to="/login" />}
           />
           <Route
             path="/login"
@@ -46,12 +49,13 @@ function App() {
 
           <Route
             path="/results"
-            element={token ? <RecipePage /> : <Navigate to="/login" />}
-          />
+            element={token ? <RecipePage favorites={favorites} setFavorites={setFavorites} /> : <Navigate to="/login" />}
+          />  
         </Routes>
 
         <Footer />
       </RecipeProvider>
+      </IngredientsProvider>
     </>
   );
 }
