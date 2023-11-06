@@ -1,6 +1,7 @@
 import "../Styles/PlannerPage.css";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import { Link } from "react-router-dom";
 
 export default function PlannerPage() {
   const [plans, setPlans] = useState([]);
@@ -44,15 +45,16 @@ export default function PlannerPage() {
             };
           }
           // Only add the meal if it hasn't been added already for that day and time.
-          if (day.meals.breakfast && !grouped[date].breakfast) {
+          if (day.meals.breakfast.name) {
             grouped[date].breakfast = day.meals.breakfast;
           }
-          if (day.meals.lunch && !grouped[date].lunch) {
+          if (day.meals.lunch.name) {
             grouped[date].lunch = day.meals.lunch;
           }
-          if (day.meals.dinner && !grouped[date].dinner) {
+          if (day.meals.dinner.name) {
             grouped[date].dinner = day.meals.dinner;
           }
+          console.log("GROUPED MEALS", grouped);
         });
       });
     });
@@ -61,13 +63,15 @@ export default function PlannerPage() {
   };
 
   const groupedPlans = groupByDate(plans);
+
+  // Display date in ascending order
   const sortedDates = Object.keys(groupedPlans).sort(
     (a, b) => new Date(a) - new Date(b)
   );
 
   // Function to format the date
   const formatDate = (dateString) => {
-    const options = { day: "numeric", month: "numeric", year: "numeric" };
+    const options = { day: "numeric", month: "numeric" }; //year: "numeric" (to add year)
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
@@ -82,8 +86,7 @@ export default function PlannerPage() {
   startMonday.setHours(0, 0, 0, 0);
 
   // console.log("PRE.MOOONNDAY", startMonday.toISOString());
-  const plannerDisplayDays = 14; // display 14 days of meal planner
-
+  const plannerDisplayDays = 14; // display 14 days of meal planner or 2 weeks
   // limit the display date until sunday week
   const endSunday = new Date(startMonday);
   endSunday.setDate(startMonday.getDate() + plannerDisplayDays - 1);
@@ -101,20 +104,20 @@ export default function PlannerPage() {
     return dateArray;
   }
 
-  // display only 2 weeks per time
+  // display only 2 weeks per page
   const displayDates = getDates(startMonday, endSunday);
-  console.log(displayDates);
+  console.log("DISPLAY DATE", displayDates);
 
   return (
     <div className="planner-wrapper">
       <div className="planner-header">
-        <h4 className="week-days">Mon</h4>
-        <h4 className="week-days">Tue</h4>
-        <h4 className="week-days">Wed</h4>
-        <h4 className="week-days">Thu</h4>
-        <h4 className="week-days">Fri</h4>
-        <h4 className="week-days">Sat</h4>
-        <h4 className="week-days">Sun</h4>
+        <h4 className="week-days">Monday</h4>
+        <h4 className="week-days">Tuesday</h4>
+        <h4 className="week-days">Wednesday</h4>
+        <h4 className="week-days">Thursday</h4>
+        <h4 className="week-days">Friday</h4>
+        <h4 className="week-days">Saturday</h4>
+        <h4 className="week-days">Sunday</h4>
       </div>
       <div className="planner-container">
         {displayDates.map((displayDate) => {
@@ -130,25 +133,47 @@ export default function PlannerPage() {
                   </div>
                   <div className="meals">
                     <h4>Breakfast:</h4>
-                    <p>
-                      {" "}
-                      {groupedPlans[displayDate].breakfast
-                        ? groupedPlans[displayDate].breakfast.name
-                        : ""}
-                    </p>
+                    {groupedPlans[displayDate]?.breakfast && (
+                      <a
+                        href={groupedPlans[displayDate].breakfast.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <p>
+                          {groupedPlans[displayDate].breakfast
+                            ? groupedPlans[displayDate].breakfast.name
+                            : ""}
+                        </p>
+                      </a>
+                    )}
                     <h4>Lunch: </h4>
-                    <p>
-                      {groupedPlans[displayDate].lunch
-                        ? groupedPlans[displayDate].lunch.name
-                        : ""}
-                    </p>
-
+                    {groupedPlans[displayDate]?.lunch && (
+                      <a
+                        href={groupedPlans[displayDate].lunch.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <p>
+                          {groupedPlans[displayDate].lunch
+                            ? groupedPlans[displayDate].lunch.name
+                            : ""}
+                        </p>
+                      </a>
+                    )}
                     <h4>Dinner: </h4>
-                    <p>
-                      {groupedPlans[displayDate].dinner
-                        ? groupedPlans[displayDate].dinner.name
-                        : ""}
-                    </p>
+                    {groupedPlans[displayDate]?.dinner && (
+                      <a
+                        href={groupedPlans[displayDate].dinner.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <p>
+                          {groupedPlans[displayDate].dinner
+                            ? groupedPlans[displayDate].dinner.name
+                            : ""}
+                        </p>
+                      </a>
+                    )}
                   </div>
                 </div>
               ) : (

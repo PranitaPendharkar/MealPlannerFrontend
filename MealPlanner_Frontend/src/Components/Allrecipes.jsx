@@ -201,7 +201,11 @@ export default function AllRecipes() {
 
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
               <h2>Choose a day to save the meal</h2>
-              <Calendar onChange={setSelectedDate} value={selectedDate} />
+
+              <Calendar
+                onChange={setSelectedDate}
+                value={selectedDate.setHours(0, 0, 0, 0)}
+              />
               <p>Selected Date: {selectedDate.toDateString()}</p>
               <h3>Selected recipe: {currentRecipe?.recipe.label}</h3>
 
