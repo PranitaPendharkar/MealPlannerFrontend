@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import "../Styles/login.css";
+import "../Styles/Login.css";
 import { AuthContext } from "../context/authContext";
 import Spinner from "./Spinner";
 
