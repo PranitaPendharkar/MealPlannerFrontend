@@ -30,6 +30,7 @@ export default function AllRecipes() {
   const [showGroceryList, setShowGroceryList] = useState(false); // State for showing/hiding GroceryList
   const { ingredientsList, setIngredientsList } = useIngredientsContext();// Ingredients list
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showIngredientsModal, setShowIngredientsModal] = useState(false); // New state to manage ingredient visibility
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -197,13 +198,23 @@ export default function AllRecipes() {
   return (
     <div className="recipes-container">
       <h1>Recipes</h1>
-      <div className="search-recipe">
+      <div className="wrap">
+      <div className="search">
         <input
           type="text"
           className="searchTerm"
           placeholder="Search for recipes"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}/>
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+          <button className="searchButton" >
+            <i
+              className="fa-solid fa-magnifying-glass fa-spin"
+              style={{ color: "#8bab6a" }}
+            ></i>{" "}
+            {/* Add a search icon here */}
+          </button>
+      </div>
       </div>
       {/* <SearchRecipe /> */}
       <div className="recipes-wrapper">
