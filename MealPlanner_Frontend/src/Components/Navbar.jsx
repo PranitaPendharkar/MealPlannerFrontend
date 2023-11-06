@@ -26,7 +26,7 @@ function Navbar() {
       <nav className="nav-links">
         <Link to="/all-recipes">Recipe</Link>
         <Link to="/meal-planner">Meal-Planner</Link>
-        <Link to="/favorite">Monday</Link>
+        <Link to="/favorite">Favourite</Link>
 
         {token !== null && (
           <>
