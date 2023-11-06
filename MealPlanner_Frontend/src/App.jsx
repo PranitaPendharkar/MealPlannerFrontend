@@ -14,6 +14,7 @@ import { RecipeProvider } from "./context/RecipeContext";
 import RecipePage from "./Components/RecipePage";
 import PlannerPage from "./Components/PlannerPage";
 import React, { useEffect, useState } from 'react';
+import { IngredientsProvider } from "./context/ingredientsContext";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <IngredientsProvider>
       <RecipeProvider>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -53,6 +55,7 @@ function App() {
 
         <Footer />
       </RecipeProvider>
+      </IngredientsProvider>
     </>
   );
 }

@@ -12,6 +12,9 @@ import { AuthContext } from "../context/authContext";
 import Select from "react-select";
 import Swal from "sweetalert2";
 //import 'sweetalert2/src/sweetalert2.scss'; // Import the styles if you're not using CSS modules
+import GroceryList from "./GroceryList"; 
+import { useIngredientsContext } from "../context/ingredientsContext";
+import "../Styles/SearchRecipe.css";
 
 export default function AllRecipes() {
   // const [date, setDate] = useState(new Date());
@@ -22,6 +25,11 @@ export default function AllRecipes() {
   const [selectedDate, setSelectedDate] = useState(new Date()); // Initialize selectedDate with the current date
 
   const { Id } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [showDefaultRecipes, setShowDefaultRecipes] = useState(true); // Flag to show default recipes
+  const [showGroceryList, setShowGroceryList] = useState(false); // State for showing/hiding GroceryList
+  const { ingredientsList, setIngredientsList } = useIngredientsContext();// Ingredients list
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,34 +57,33 @@ export default function AllRecipes() {
     // Set the selected date to the current date in the beginning
     setSelectedDate(new Date());
   };
-
-  // edamam API - Recipe
   const fetchRecipes = async () => {
     try {
       const from = (currentPage - 1) * recipesPerPage;
-
       const appId = import.meta.env.VITE_API_ID;
       const appKey = import.meta.env.VITE_APP_KEY;
-
       const to = from + recipesPerPage;
-      const edamamAPIUrl = `https://api.edamam.com/search?q=lunch&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
-      console.log("API URL:", edamamAPIUrl);
+      let edamamAPIUrl = "";
+
+      if (searchQuery && searchQuery.trim() !== "") {
+        edamamAPIUrl = `https://api.edamam.com/search?q=${searchQuery}&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
+        setShowDefaultRecipes(false);
+      } else {
+        edamamAPIUrl = `https://api.edamam.com/search?q=dinner&from=${from}&to=${to}&app_id=${appId}&app_key=${appKey}`;
+        setShowDefaultRecipes(true);
+      }
 
       const response = await axios.get(edamamAPIUrl);
-
       const newRecipes = response.data.hits.map((hit) => hit.recipe);
-
-      setRecipes(newRecipes); // Directly set the new recipes
-
-      console.log("new recipeesssssss", newRecipes);
+      setRecipes(newRecipes);
     } catch (error) {
       console.error("Error fetching recipes:", error);
     }
   };
-
   useEffect(() => {
     fetchRecipes();
-  }, [currentPage]);
+    setIngredientsList([]); 
+  }, [currentPage,searchQuery]);
 
   const mealPlannerData = {
     user: Id,
@@ -130,6 +137,20 @@ export default function AllRecipes() {
 
       console.log("MEAL TO SAVE: ", updatedData);
       // You can now send `updatedData` to your backend.
+      
+       // Extract and collect the ingredients from the current recipe
+       const recipeIngredients = currentRecipe.recipe.ingredientLines;
+
+       // Combine the new ingredients with the existing ingredients list
+       const updatedIngredientsList = [...ingredientsList, ...recipeIngredients];
+ 
+       // Update the ingredients list state
+       setIngredientsList(updatedIngredientsList);
+ 
+       // Continue with the rest of your meal planner logic
+       console.log("Ingredients List:", updatedIngredientsList);
+     
+      // You can now send `updatedData` to your backend.
 
       console.log("ABOUT TO ENTER FETCH");
 
@@ -176,7 +197,15 @@ export default function AllRecipes() {
   return (
     <div className="recipes-container">
       <h1>Recipes</h1>
-      <SearchRecipe />
+      <div className="search-recipe">
+        <input
+          type="text"
+          className="searchTerm"
+          placeholder="Search for recipes"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}/>
+      </div>
+      {/* <SearchRecipe /> */}
       <div className="recipes-wrapper">
         {recipes.map((recipe, index) => (
           <div className="recipe-card" key={index}>
@@ -190,6 +219,13 @@ export default function AllRecipes() {
               <a href={recipe.url} target="_blank" rel="noopener noreferrer">
                 {" "}
                 <Meta title={recipe.label} description={recipe.mealType} />{" "}
+                <Meta  description={recipe.cuisineType} />{" "}
+                <div className="info-row">
+        <i className="fa-brands fa-nutritionix" style={{ color: "#feda75" }}></i>
+        <Meta description={Math.round(recipe.calories)} />
+        <i className="fa-regular fa-clock" style={{ color: "#feda75" }}></i>
+        <Meta description={`${recipe.totalTime} Minutes`} />
+      </div>
               </a>
             </Card>
             <button
@@ -245,6 +281,12 @@ export default function AllRecipes() {
           Next &raquo;
         </button>
       </div>
+      <button  className="btn-add-planner" onClick={() => setIsModalOpen(true)}>View my Grocery List</button>
+      <GroceryList
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        ingredientsList={ingredientsList}
+      />
     </div>
   );
 }
