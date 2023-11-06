@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import React, { useEffect, useState } from 'react';
 import "../Styles/AllRecipes.css";
-import { FaFacebook, FaTwitter, FaPinterest } from 'react-icons/fa';
+
 
 const { Meta } = Card
 

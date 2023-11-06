@@ -17,11 +17,11 @@ export default function Signup() {
     setIsLoading(true);
     setError(null);
 
-    const localAPI = "http://localhost:8080/user/signup";
-    // const deployAPI = "https://meal-planner-backend-57g4.onrender.com/user/signup";
+   // const localAPI = "http://localhost:8080/user/signup";
+    const deployAPI = "https://meal-planner-backend-57g4.onrender.com/user/signup";
 
     //Fetch from our API
-    const response = await fetch(localAPI, {
+    const response = await fetch(deployAPI, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, username }),

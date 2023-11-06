@@ -17,12 +17,12 @@ export default function Login() {
     setIsLoading(true);
     setError(null);
 
-    const localAPI = "http://localhost:8080/user/login";
+   // const localAPI = "http://localhost:8080/user/login";
 
     //Fetch from our API
-    // const deployAPI = "https://meal-planner-backend-57g4.onrender.com/user/login";
+     const deployAPI = "https://meal-planner-backend-57g4.onrender.com/user/login";
 
-    const response = await fetch(localAPI, {
+    const response = await fetch(deployAPI, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

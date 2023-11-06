@@ -154,13 +154,13 @@ export default function AllRecipes() {
 
       console.log("ABOUT TO ENTER FETCH");
 
-      const localAPI =
+     // const localAPI =
         "http://localhost:8080/meal-planner/create-meal-planners";
-      // const deployAPI =
-      //   "https://meal-planner-backend-57g4.onrender.com/meal-planner/create-meal-planners";
+       const deployAPI =
+         "https://meal-planner-backend-57g4.onrender.com/meal-planner/create-meal-planners";
 
       try {
-        const res = await fetch(localAPI, {
+        const res = await fetch(deployAPI, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -281,12 +281,12 @@ export default function AllRecipes() {
           Next &raquo;
         </button>
       </div>
-      <button  className="btn-add-planner" onClick={() => setIsModalOpen(true)}>View my Grocery List</button>
+      {/* <button  className="btn-add-planner" onClick={() => setIsModalOpen(true)}>View my Grocery List</button>
       <GroceryList
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         ingredientsList={ingredientsList}
-      />
+      /> */}
     </div>
   );
 }
