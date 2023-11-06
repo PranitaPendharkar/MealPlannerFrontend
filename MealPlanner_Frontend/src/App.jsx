@@ -4,7 +4,7 @@ import Spinner from "./Components/Spinner";
 import AllRecipes from "./Components/Allrecipes";
 import Login from "./Components/Login";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Signup from "./Components/SignUp";
+import Signup from "./Components/Signup";
 import Navbar from "./Components/Navbar";
 import Favorite from "./Components/Favorite";
 import Footer from "./Components/Footer";
